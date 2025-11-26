@@ -15,8 +15,17 @@ namespace FormularioApi.Endpoints
             group.MapPost("/Agregar Personas", AgregarPersona);
             group.MapPut("/Actualizar Personas/{id:int}", ActualizarPersona);
             group.MapDelete("/Borrar Personas/{id:int}", BorrarPersona);
+            group.MapGet("/Obtener personas", ObtenerPersonas).CacheOutput(c => c.Expire(TimeSpan.FromSeconds(60)).Tag("personas-get"));
             return group;
 
+        }
+        static async Task<Ok<List<PersonaDTO>>> ObtenerPersonas(IRepositorioPersonas repositorio, IMapper mapper,
+            int pagina = 1, int recordsPorPagina = 10)
+        {
+            var paginacion = new PaginacionDTO { Pagina = pagina, RecordsPorPagina = recordsPorPagina };
+            var personas = await repositorio.ObtenerTodos(paginacion);
+            var personasDTO = mapper.Map<List<PersonaDTO>>(personas);
+            return TypedResults.Ok(personasDTO);
         }
         static async Task<Results<Ok<PersonaDTO>,NotFound>> ObtenerpersonaPorId(IRepositorioPersonas repositorio, int id, IMapper mapper)
         {

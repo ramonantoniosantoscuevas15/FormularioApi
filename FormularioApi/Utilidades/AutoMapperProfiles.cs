@@ -11,6 +11,9 @@ namespace FormularioApi.Utilidades
             //mapeando las personas
             CreateMap<CrearPersonaDTO, Persona>();
             CreateMap<Persona, PersonaDTO>();
+            //mapeando los correos
+            CreateMap<CrearCorreoDTO, Correo>();
+            CreateMap<Correo, CorreoDTO>();
         }
     }
 }

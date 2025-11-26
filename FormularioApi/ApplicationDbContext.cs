@@ -9,6 +9,7 @@ namespace FormularioApi
         {
         }
         public DbSet<Persona> Personas { get; set; }
+        public DbSet<Correo> Correos { get; set; }
 
         protected ApplicationDbContext()
         {

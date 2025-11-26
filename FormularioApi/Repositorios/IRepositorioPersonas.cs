@@ -1,4 +1,5 @@
-﻿using FormularioApi.Entidades;
+﻿using FormularioApi.DTOs;
+using FormularioApi.Entidades;
 
 namespace FormularioApi.Repositorios
 {
@@ -10,5 +11,6 @@ namespace FormularioApi.Repositorios
         Task<int> Crear(Persona personas);
         Task<bool> Existe(int id);
         Task<Persona?> ObtenerPorId(int id);
+        Task<List<Persona>> ObtenerTodos(PaginacionDTO paginacionDTO);
     }
 }
