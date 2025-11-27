@@ -9,5 +9,6 @@ namespace FormularioApi.DTOs
         public string Apellido { get; set; } = null!;
         public string Cedula { get; set; } = null!;
         public List<Correo> Correos { get; set; } = new List<Correo>();
+        public List<Dirrecion> Dirreciones { get; set; } = new List<Dirrecion>();
     }
 }

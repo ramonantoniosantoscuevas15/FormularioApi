@@ -14,6 +14,9 @@ namespace FormularioApi.Utilidades
             //mapeando los correos
             CreateMap<CrearCorreoDTO, Correo>();
             CreateMap<Correo, CorreoDTO>();
+            //mapeando las dirreciones
+            CreateMap<CrearDirrecionDTO, Dirrecion>();
+            CreateMap<Dirrecion, DirrecionDTO>();
         }
     }
 }
