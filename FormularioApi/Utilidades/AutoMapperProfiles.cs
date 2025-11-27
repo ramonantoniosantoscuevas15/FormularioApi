@@ -17,6 +17,9 @@ namespace FormularioApi.Utilidades
             //mapeando las dirreciones
             CreateMap<CrearDirrecionDTO, Dirrecion>();
             CreateMap<Dirrecion, DirrecionDTO>();
+            //mapeando los telefonos
+            CreateMap<CrearTelefonoDTO, Telefono>();
+            CreateMap<Telefono, TelefonoDTO>();
         }
     }
 }

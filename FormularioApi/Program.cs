@@ -27,6 +27,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRepositorioPersonas, RepositorioPersonas>();
 builder.Services.AddScoped<IRepositorioCorreos, RepositorioCorreos>();
 builder.Services.AddScoped<IRepositorioDirreciones, RepositorioDirreciones>();
+builder.Services.AddScoped<IRepositorioTelefonos, RepositorioTelefonos>();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddHttpContextAccessor();
 
@@ -41,6 +42,7 @@ app.MapGet("/", [EnableCors(policyName:"libre")]() => "Hello World!");
 app.MapGroup("").MapPersonas();
 app.MapGroup("").MapCorreos();
 app.MapGroup("").MapDirreciones();
+app.MapGroup("").MapTelefonos();    
 
 //fin de area de los middleware
 app.Run();

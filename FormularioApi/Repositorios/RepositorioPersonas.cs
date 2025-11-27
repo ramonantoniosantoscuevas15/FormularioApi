@@ -30,12 +30,12 @@ namespace FormularioApi.Repositorios
             //return await context.Personas.OrderBy(p => p.Apellido).ToListAsync();
             var queryable = context.Personas.AsQueryable();
             await httpContext.InsertarParametrosPaginacionEncabecera(queryable);
-            return await queryable.Include(p=>p.Correos).Include(p=>p.Dirreciones).
+            return await queryable.Include(p => p.Telefonos).Include(p=>p.Correos).Include(p=>p.Dirreciones).
                 OrderByDescending(p => p.Apellido).Paginar(paginacionDTO).ToListAsync();
         }
         public async Task<Persona?> ObtenerPorId(int id)
         {
-            return await context.Personas.Include(p => p.Correos).AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            return await context.Personas.Include(p=> p.Telefonos).Include(p=> p.Dirreciones).Include(p => p.Correos).AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
         }
         public async Task<int> Crear(Persona personas)
         {

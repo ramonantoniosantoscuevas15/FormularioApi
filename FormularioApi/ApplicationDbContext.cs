@@ -11,6 +11,7 @@ namespace FormularioApi
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Correo> Correos { get; set; }
         public DbSet<Dirrecion> Dirreciones { get; set; }
+        public DbSet<Telefono> Telefonos { get; set; }
 
         protected ApplicationDbContext()
         {
