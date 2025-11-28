@@ -2,6 +2,7 @@
 using FormularioApi;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FormularioApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251128190418_Categorias")]
+    partial class Categorias
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,21 +39,6 @@ namespace FormularioApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categorias");
-                });
-
-            modelBuilder.Entity("FormularioApi.Entidades.CategoriaPersona", b =>
-                {
-                    b.Property<int>("CategoriaId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PersonaId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CategoriaId", "PersonaId");
-
-                    b.HasIndex("PersonaId");
-
-                    b.ToTable("CategoriaPersonas");
                 });
 
             modelBuilder.Entity("FormularioApi.Entidades.Correo", b =>
@@ -171,25 +159,6 @@ namespace FormularioApi.Migrations
                     b.ToTable("Telefonos");
                 });
 
-            modelBuilder.Entity("FormularioApi.Entidades.CategoriaPersona", b =>
-                {
-                    b.HasOne("FormularioApi.Entidades.Categoria", "Categoria")
-                        .WithMany("CategoriaPersonas")
-                        .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FormularioApi.Entidades.Persona", "Persona")
-                        .WithMany("CategoriaPersonas")
-                        .HasForeignKey("PersonaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Categoria");
-
-                    b.Navigation("Persona");
-                });
-
             modelBuilder.Entity("FormularioApi.Entidades.Correo", b =>
                 {
                     b.HasOne("FormularioApi.Entidades.Persona", null)
@@ -217,15 +186,8 @@ namespace FormularioApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FormularioApi.Entidades.Categoria", b =>
-                {
-                    b.Navigation("CategoriaPersonas");
-                });
-
             modelBuilder.Entity("FormularioApi.Entidades.Persona", b =>
                 {
-                    b.Navigation("CategoriaPersonas");
-
                     b.Navigation("Correos");
 
                     b.Navigation("Dirreciones");
