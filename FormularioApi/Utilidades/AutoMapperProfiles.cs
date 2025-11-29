@@ -10,7 +10,10 @@ namespace FormularioApi.Utilidades
         {
             //mapeando las personas
             CreateMap<CrearPersonaDTO, Persona>();
-            CreateMap<Persona, PersonaDTO>();
+            CreateMap<Persona, PersonaDTO>()
+                //obteniendo una persona con sus categorias
+                .ForMember(p => p.Categorias, entidad => entidad.MapFrom(c => c.CategoriaPersonas.Select(cp =>
+                new CategoriaDTO { Id = cp.CategoriaId, Tipo = cp.Categoria.Tipo })));
             //mapeando los correos
             CreateMap<CrearCorreoDTO, Correo>();
             CreateMap<Correo, CorreoDTO>();

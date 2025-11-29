@@ -16,6 +16,7 @@ namespace FormularioApi.Endpoints
             group.MapPut("/Actualizar Personas/{id:int}", ActualizarPersona);
             group.MapDelete("/Borrar Personas/{id:int}", BorrarPersona);
             group.MapGet("/Obtener personas", ObtenerPersonas).CacheOutput(c => c.Expire(TimeSpan.FromSeconds(60)).Tag("personas-get"));
+            group.MapPost("/Asignar categoria/{id:int}", AsignarCategoria);
             return group;
 
         }
@@ -71,6 +72,28 @@ namespace FormularioApi.Endpoints
             await outputCacheStore.EvictByTagAsync("personas-get", default);
             return TypedResults.NoContent();
         }
+        static async Task<Results<NoContent, NotFound,BadRequest<string>>> AsignarCategoria(int id, List<int> categoriasIds,
+            IRepositorioPersonas repositorioPersonas,IRepositorioCategorias repositorioCategorias)
+        {
+            if (!await repositorioPersonas.Existe(id))
+            {
+                return TypedResults.NotFound();
+            }
+            var categoriasExistentes = new List<int>();
 
+            if(categoriasIds.Count != 0)
+            {
+                categoriasExistentes = await repositorioCategorias.Existen(categoriasIds);
+
+            }
+
+            if(categoriasExistentes.Count != categoriasIds.Count)
+            {
+                var categoriasNoExistentes = categoriasIds.Except(categoriasExistentes);
+                return TypedResults.BadRequest($"Las categorias de id {string.Join(",", categoriasNoExistentes)} no existen.");
+            }
+            await repositorioPersonas.Asignarcategoria(id, categoriasIds);
+            return TypedResults.NoContent();
+        }
     }
 }

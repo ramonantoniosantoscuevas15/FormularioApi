@@ -20,6 +20,10 @@ namespace FormularioApi.Repositorios
         {
             return await context.Categorias.AnyAsync(c => c.Id == id);
         }
+        public async Task<List<int>> Existen(List<int> ids)
+        {
+            return await context.Categorias.Where(c => ids.Contains(c.Id)).Select(c => c.Id).ToListAsync();
+        }
         public async Task<List<Categoria>> ObtenerTodos(PaginacionDTO paginacionDTO)
         {
             var queryable = context.Categorias.AsQueryable();

@@ -11,5 +11,6 @@ namespace FormularioApi.DTOs
         public List<Correo> Correos { get; set; } = new List<Correo>();
         public List<Dirrecion> Dirreciones { get; set; } = new List<Dirrecion>();
         public List<Telefono> Telefonos { get; set; } = new List<Telefono>();
+        public List<CategoriaDTO> Categorias { get; set; } = new List<CategoriaDTO>();
     }
 }

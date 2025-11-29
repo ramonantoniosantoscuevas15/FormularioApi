@@ -9,6 +9,7 @@ namespace FormularioApi.Repositorios
         Task Borrar(int id);
         Task<int> Crear(Categoria categorias);
         Task<bool> Existe(int id);
+        Task<List<int>> Existen(List<int> ids);
         Task<Categoria?> ObtenerPorId(int id);
         Task<List<Categoria>> ObtenerTodos(PaginacionDTO paginacionDTO);
     }

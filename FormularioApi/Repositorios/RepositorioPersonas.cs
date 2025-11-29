@@ -12,11 +12,13 @@ namespace FormularioApi.Repositorios
     public class RepositorioPersonas : IRepositorioPersonas
     {
         private readonly ApplicationDbContext context;
+        private readonly IMapper mapper;
         private readonly HttpContext httpContext;
 
-        public RepositorioPersonas(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public RepositorioPersonas(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
             httpContext = httpContextAccessor.HttpContext!;
         }
 
@@ -36,7 +38,9 @@ namespace FormularioApi.Repositorios
         public async Task<Persona?> ObtenerPorId(int id)
         {
             return await context.Personas.Include(p=> p.Telefonos).Include(p=> p.Dirreciones).
-                Include(p => p.Correos).AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+                Include(p => p.Correos).Include(p => p.CategoriaPersonas)
+                .ThenInclude(cp => cp.Categoria)
+                .AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
         }
         public async Task<int> Crear(Persona personas)
         {
@@ -59,6 +63,18 @@ namespace FormularioApi.Repositorios
         {
             return await context.Personas.Where(p => p.Nombre.Contains(nombre)).
                 OrderBy(p => p.Nombre).ToListAsync();
+        }
+        public async Task Asignarcategoria (int id,List<int> categoriasIds)
+        {
+            var persona = await context.Personas.Include(p => p.CategoriaPersonas).FirstOrDefaultAsync(p => p.Id == id);
+
+            if(persona is null)
+            {
+                throw new ArgumentException($"No existe una persona con el id: {id}");
+            }
+            var categoriapersonas = categoriasIds.Select(categoriaId => new CategoriaPersona() { CategoriaId = categoriaId, });
+            persona.CategoriaPersonas = mapper.Map(categoriapersonas,persona.CategoriaPersonas);
+            await context.SaveChangesAsync();
         }
         
     }
