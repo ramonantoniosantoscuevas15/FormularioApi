@@ -20,6 +20,9 @@ namespace FormularioApi.Utilidades
             //mapeando los telefonos
             CreateMap<CrearTelefonoDTO, Telefono>();
             CreateMap<Telefono, TelefonoDTO>();
+            //mapeando las categorias
+            CreateMap<CrearCategoriaDTO, Categoria>();
+            CreateMap<Categoria, CategoriaDTO>();
         }
     }
 }

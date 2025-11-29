@@ -35,7 +35,8 @@ namespace FormularioApi.Repositorios
         }
         public async Task<Persona?> ObtenerPorId(int id)
         {
-            return await context.Personas.Include(p=> p.Telefonos).Include(p=> p.Dirreciones).Include(p => p.Correos).AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            return await context.Personas.Include(p=> p.Telefonos).Include(p=> p.Dirreciones).
+                Include(p => p.Correos).AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
         }
         public async Task<int> Crear(Persona personas)
         {
