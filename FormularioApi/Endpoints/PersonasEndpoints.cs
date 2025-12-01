@@ -17,6 +17,7 @@ namespace FormularioApi.Endpoints
             group.MapDelete("/Borrar Personas/{id:int}", BorrarPersona);
             group.MapGet("/Obtener personas", ObtenerPersonas).CacheOutput(c => c.Expire(TimeSpan.FromSeconds(60)).Tag("personas-get"));
             group.MapPost("/Asignar categoria/{id:int}", AsignarCategoria);
+            group.MapGet("/Bucador Personas",BusquedaPersona);
             return group;
 
         }
@@ -36,6 +37,13 @@ namespace FormularioApi.Endpoints
                 return TypedResults.NotFound();
             }
             var personaDTO = mapper.Map<PersonaDTO>(persona);
+            return TypedResults.Ok(personaDTO);
+        }
+        static async Task<Results<Ok<List<PersonaDTO>>, NotFound>> BusquedaPersona(IRepositorioPersonas repositorio,string nombre, IMapper mapper)
+        {
+            var persona = await repositorio.BusquedaPorNombre(nombre);
+          
+            var personaDTO = mapper.Map<List<PersonaDTO>>(persona);
             return TypedResults.Ok(personaDTO);
         }
         static async Task<Created<PersonaDTO>> AgregarPersona(CrearPersonaDTO CrearpersonaDTO, IRepositorioPersonas repositorio,

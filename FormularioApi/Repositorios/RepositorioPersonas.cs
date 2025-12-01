@@ -33,6 +33,8 @@ namespace FormularioApi.Repositorios
             var queryable = context.Personas.AsQueryable();
             await httpContext.InsertarParametrosPaginacionEncabecera(queryable);
             return await queryable.Include(p => p.Telefonos).Include(p=>p.Correos).Include(p=>p.Dirreciones).
+                Include(p=>p.CategoriaPersonas)
+                .ThenInclude(cp => cp.Categoria).AsNoTracking().
                 OrderByDescending(p => p.Apellido).Paginar(paginacionDTO).ToListAsync();
         }
         public async Task<Persona?> ObtenerPorId(int id)
@@ -61,7 +63,9 @@ namespace FormularioApi.Repositorios
 
         public async Task<List<Persona>> BusquedaPorNombre(string nombre)
         {
-            return await context.Personas.Where(p => p.Nombre.Contains(nombre)).
+            return await context.Personas.Where(p => p.Nombre.Contains(nombre)).Include(p => p.Telefonos).Include(p=>p.Correos).
+                Include(p => p.Dirreciones).Include(p => p.CategoriaPersonas)
+                .ThenInclude(cp => cp.Categoria).
                 OrderBy(p => p.Nombre).ToListAsync();
         }
         public async Task Asignarcategoria (int id,List<int> categoriasIds)
