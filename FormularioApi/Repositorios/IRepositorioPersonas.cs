@@ -11,6 +11,7 @@ namespace FormularioApi.Repositorios
         Task<List<Persona>> BusquedaPorNombre(string nombre);
         Task<int> Crear(Persona personas);
         Task<bool> Existe(int id);
+        Task<List<Persona>> FiltrarCategoria(string tipo);
         Task<Persona?> ObtenerPorId(int id);
         Task<List<Persona>> ObtenerTodos(PaginacionDTO paginacionDTO);
     }

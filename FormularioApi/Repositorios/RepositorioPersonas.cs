@@ -37,11 +37,18 @@ namespace FormularioApi.Repositorios
                 .ThenInclude(cp => cp.Categoria).AsNoTracking().
                 OrderByDescending(p => p.Apellido).Paginar(paginacionDTO).ToListAsync();
         }
+        public async Task<List<Persona>> FiltrarCategoria(string tipo)
+        {
+            return await context.Personas.Include(p => p.CategoriaPersonas).ThenInclude(cp => cp.Categoria.Tipo).AsNoTracking()
+               .ToListAsync();
+                
+        }
+
         public async Task<Persona?> ObtenerPorId(int id)
         {
-            return await context.Personas.Include(p=> p.Telefonos).Include(p=> p.Dirreciones).
-                Include(p => p.Correos).Include(p => p.CategoriaPersonas)
-                .ThenInclude(cp => cp.Categoria)
+            return await context.Personas.Include(p => p.CategoriaPersonas)
+                .ThenInclude(cp => cp.Categoria).Include(p=> p.Telefonos).Include(p=> p.Dirreciones).
+                Include(p => p.Correos)
                 .AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
         }
         public async Task<int> Crear(Persona personas)

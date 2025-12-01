@@ -15,7 +15,7 @@ namespace FormularioApi.Endpoints
             group.MapPost("/Agregar Personas", AgregarPersona);
             group.MapPut("/Actualizar Personas/{id:int}", ActualizarPersona);
             group.MapDelete("/Borrar Personas/{id:int}", BorrarPersona);
-            group.MapGet("/Obtener personas", ObtenerPersonas).CacheOutput(c => c.Expire(TimeSpan.FromSeconds(60)).Tag("personas-get"));
+            group.MapGet("/Obtener Personas", ObtenerPersonas).CacheOutput(c => c.Expire(TimeSpan.FromSeconds(60)).Tag("personas-get"));
             group.MapPost("/Asignar categoria/{id:int}", AsignarCategoria);
             group.MapGet("/Bucador Personas",BusquedaPersona);
             return group;
@@ -29,6 +29,8 @@ namespace FormularioApi.Endpoints
             var personasDTO = mapper.Map<List<PersonaDTO>>(personas);
             return TypedResults.Ok(personasDTO);
         }
+        //static async Task<Ok<List<PersonaDTO>>> FiltrarPorCategoria(string)
+        
         static async Task<Results<Ok<PersonaDTO>,NotFound>> ObtenerpersonaPorId(IRepositorioPersonas repositorio, int id, IMapper mapper)
         {
             var persona = await repositorio.ObtenerPorId(id);

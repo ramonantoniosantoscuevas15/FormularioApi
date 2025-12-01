@@ -11,7 +11,7 @@ namespace FormularioApi.Endpoints
     {
         public static RouteGroupBuilder MapCategorias(this RouteGroupBuilder group)
         {
-            group.MapGet("/Obtener Categorias", ObtenerCategorias).CacheOutput(c => c.Expire(TimeSpan.FromSeconds(60)).Tag("categorias-get"));
+            group.MapGet("/Obtener Catalogo", ObtenerCategorias).CacheOutput(c => c.Expire(TimeSpan.FromSeconds(60)).Tag("categorias-get"));
             group.MapGet("/Obtener Categoria por id/{id:int}", ObtenerCategoriaPorId);
             group.MapPost("/Agregar Categoria", AgregarCategoria);
             group.MapPut("/Actualizar Categoria/{id:int}", ActualizarCategoria);
