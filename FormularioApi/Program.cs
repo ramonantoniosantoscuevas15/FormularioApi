@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var origenesPermitidos = builder.Configuration.GetValue<string>("origenesPermitidos")!;
+var origenesPermitidos = builder.Configuration.GetValue<string>("origenesPermitidos")!.Split(",");
 //inicio de area de los servicios
 var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnetion");
 builder.Services.AddDbContext<ApplicationDbContext>(opciones => opciones.UseNpgsql(connectionString));
@@ -18,7 +18,7 @@ builder.Services.AddCors(opciones =>
     });
     opciones.AddPolicy("libre", configuracion =>
     {
-        configuracion.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        configuracion.WithOrigins(origenesPermitidos).AllowAnyHeader().AllowAnyMethod();
     });
 });
 builder.Services.AddOutputCache();
