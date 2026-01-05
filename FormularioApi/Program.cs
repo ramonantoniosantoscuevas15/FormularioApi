@@ -14,7 +14,9 @@ builder.Services.AddCors(opciones =>
 {
     opciones.AddDefaultPolicy(configuracion =>
     {
-        configuracion.WithOrigins(origenesPermitidos).AllowAnyHeader().AllowAnyMethod();
+        configuracion.WithOrigins(origenesPermitidos).AllowAnyHeader().AllowAnyMethod()
+        .WithExposedHeaders("cantidadTotalRegistros");
+        
     });
     opciones.AddPolicy("libre", configuracion =>
     {
