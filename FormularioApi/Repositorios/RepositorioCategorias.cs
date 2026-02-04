@@ -28,7 +28,7 @@ namespace FormularioApi.Repositorios
         {
             var queryable = context.Categorias.AsQueryable();
             await httpContext.InsertarParametrosPaginacionEncabecera(queryable);
-            return await queryable.OrderBy(c => c.Tipo).Paginar(paginacionDTO).ToListAsync();
+            return await queryable.OrderBy(c => c.tipo).Paginar(paginacionDTO).ToListAsync();
         }
         public async Task<Categoria?> ObtenerPorId(int id)
         {

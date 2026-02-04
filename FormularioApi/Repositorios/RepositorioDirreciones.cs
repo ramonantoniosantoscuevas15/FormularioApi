@@ -11,15 +11,15 @@ namespace FormularioApi.Repositorios
         {
             this.context = context;
         }
-        public async Task<List<Dirrecion>> ObtenerTodos(int personaId)
+        public async Task<List<Dirreccion>> ObtenerTodos(int personaId)
         {
-            return await context.Dirreciones.Where(d => d.PersonaId == personaId).ToListAsync();
+            return await context.Dirrecciones.Where(d => d.PersonaId == personaId).ToListAsync();
         }
-        public async Task<Dirrecion?> ObtenerPorId(int id)
+        public async Task<Dirreccion?> ObtenerPorId(int id)
         {
-            return await context.Dirreciones.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+            return await context.Dirrecciones.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
         }
-        public async Task<int> Crear(Dirrecion dirreciones)
+        public async Task<int> Crear(Dirreccion dirreciones)
         {
             context.Add(dirreciones);
             await context.SaveChangesAsync();
@@ -27,9 +27,9 @@ namespace FormularioApi.Repositorios
         }
         public async Task<bool> Existe(int id)
         {
-            return await context.Dirreciones.AnyAsync(d => d.Id == id);
+            return await context.Dirrecciones.AnyAsync(d => d.Id == id);
         }
-        public async Task Actualizar(Dirrecion dirrecion)
+        public async Task Actualizar(Dirreccion dirrecion)
         {
             context.Update(dirrecion);
             await context.SaveChangesAsync();
@@ -37,7 +37,7 @@ namespace FormularioApi.Repositorios
         }
         public async Task Borrar(int id)
         {
-            await context.Dirreciones.Where(d => d.Id == id).ExecuteDeleteAsync();
+            await context.Dirrecciones.Where(d => d.Id == id).ExecuteDeleteAsync();
         }
     }
 }

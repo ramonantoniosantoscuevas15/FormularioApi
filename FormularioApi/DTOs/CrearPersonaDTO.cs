@@ -2,8 +2,12 @@
 {
     public class CrearPersonaDTO
     {
-        public string Nombre { get; set; } = null!;
-        public string Apellido { get; set; } = null!;
-        public string Cedula { get; set; } = null!;
+        public required string nombre { get; set; } = null!;
+        public required string apellido { get; set; } = null!;
+        public DateTime? fechanacimiento { get; set; }
+        public int? cedula { get; set; }
+        public List<CrearCorreoDTO> Correos { get; set; } = null!;
+        public List<CrearDirreccionDTO> Dirrecciones { get; set; } = null!;
+        public List<CrearTelefonoDTO> Telefonos { get; set; } = null!;
     }
 }

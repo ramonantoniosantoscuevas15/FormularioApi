@@ -19,7 +19,7 @@ namespace FormularioApi.Endpoints
 
             return group;
         }
-        static async Task<Results<Ok<List<DirrecionDTO>>, NotFound>> ObtenerDirreciones(int personaId,IRepositorioDirreciones repositorioDirreciones,
+        static async Task<Results<Ok<List<DirreccionDTO>>, NotFound>> ObtenerDirreciones(int personaId,IRepositorioDirreciones repositorioDirreciones,
             IRepositorioPersonas repositorioPersonas,IMapper mapper)
         {
             if (!await repositorioPersonas.Existe(personaId))
@@ -27,10 +27,10 @@ namespace FormularioApi.Endpoints
                 return TypedResults.NotFound();
             }
             var dirreciones = await repositorioDirreciones.ObtenerTodos(personaId);
-            var dirrecionesDTO = mapper.Map<List<DirrecionDTO>>(dirreciones);
+            var dirrecionesDTO = mapper.Map<List<DirreccionDTO>>(dirreciones);
             return TypedResults.Ok(dirrecionesDTO);
         }
-        static async Task<Results<Ok<DirrecionDTO>, NotFound>> ObtenerDirrecionPorId(IRepositorioDirreciones repositorio, 
+        static async Task<Results<Ok<DirreccionDTO>, NotFound>> ObtenerDirrecionPorId(IRepositorioDirreciones repositorio, 
             IMapper mapper, int id)
         {
             var dirreciones = await repositorio.ObtenerPorId(id);
@@ -38,24 +38,24 @@ namespace FormularioApi.Endpoints
             {
                 return TypedResults.NotFound();
             }
-            var dirrecionDTO = mapper.Map<DirrecionDTO>(dirreciones);
+            var dirrecionDTO = mapper.Map<DirreccionDTO>(dirreciones);
             return TypedResults.Ok(dirrecionDTO);
         }
-        static async Task<Results<CreatedAtRoute<DirrecionDTO>, NotFound>> AgregarDirrecion(int personaId,IRepositorioDirreciones repositorioDirreciones,
-            IRepositorioPersonas repositorioPersonas, IMapper mapper, IOutputCacheStore outputCacheStore, CrearDirrecionDTO crearDirrecionDTO)
+        static async Task<Results<CreatedAtRoute<DirreccionDTO>, NotFound>> AgregarDirrecion(int personaId,IRepositorioDirreciones repositorioDirreciones,
+            IRepositorioPersonas repositorioPersonas, IMapper mapper, IOutputCacheStore outputCacheStore, CrearDirreccionDTO crearDirrecionDTO)
         {
             if (!await repositorioPersonas.Existe(personaId))
             {
                 return TypedResults.NotFound();
             }
-            var dirrecion = mapper.Map<Dirrecion>(crearDirrecionDTO);
+            var dirrecion = mapper.Map<Dirreccion>(crearDirrecionDTO);
             dirrecion.PersonaId = personaId;
             var id = await repositorioDirreciones.Crear(dirrecion);
             await outputCacheStore.EvictByTagAsync("Dirreciones-get", default);
-            var dirrecionDTO = mapper.Map<DirrecionDTO>(dirrecion);
+            var dirrecionDTO = mapper.Map<DirreccionDTO>(dirrecion);
             return TypedResults.CreatedAtRoute(dirrecionDTO, "ObtenerDirrecionporId", new { id, personaId });
         }
-        static async Task<Results<NoContent, NotFound>> ActualizarDirrecion(int personaId,int id,CrearDirrecionDTO crearDirrecionDTO,
+        static async Task<Results<NoContent, NotFound>> ActualizarDirrecion(int personaId,int id,CrearDirreccionDTO crearDirrecionDTO,
             IRepositorioDirreciones repositorioDirreciones, IRepositorioPersonas repositorioPersonas, IMapper mapper,
             IOutputCacheStore outputCacheStore)
         {
@@ -67,7 +67,7 @@ namespace FormularioApi.Endpoints
             {
                 return TypedResults.NotFound();
             }
-            var dirreciones = mapper.Map<Dirrecion>(crearDirrecionDTO);
+            var dirreciones = mapper.Map<Dirreccion>(crearDirrecionDTO);
             dirreciones.Id = id;
             dirreciones.PersonaId = personaId;
             await repositorioDirreciones.Actualizar(dirreciones);

@@ -4,11 +4,11 @@ namespace FormularioApi.Repositorios
 {
     public interface IRepositorioDirreciones
     {
-        Task Actualizar(Dirrecion dirrecion);
+        Task Actualizar(Dirreccion dirrecion);
         Task Borrar(int id);
-        Task<int> Crear(Dirrecion dirreciones);
+        Task<int> Crear(Dirreccion dirreciones);
         Task<bool> Existe(int id);
-        Task<Dirrecion?> ObtenerPorId(int id);
-        Task<List<Dirrecion>> ObtenerTodos(int personaId);
+        Task<Dirreccion?> ObtenerPorId(int id);
+        Task<List<Dirreccion>> ObtenerTodos(int personaId);
     }
 }

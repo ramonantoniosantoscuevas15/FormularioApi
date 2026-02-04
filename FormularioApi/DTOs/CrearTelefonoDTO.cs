@@ -2,10 +2,10 @@
 {
     public class CrearTelefonoDTO
     {
-        
-        public string Tipo { get; set; } = null!;
-        public string CodigoPais { get; set; } = null!;
-        public int Numero { get; set; }
-        
+
+        public string? tiponumero { get; set; }
+        public string? codigopais { get; set; }
+        public required int numero { get; set; }
+
     }
 }

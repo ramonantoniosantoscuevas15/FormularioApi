@@ -3,6 +3,6 @@
     public class CrearCorreoDTO
     {
         public string Correos { get; set; } = null!;
-        
+
     }
 }
